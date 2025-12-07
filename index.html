@@ -1,791 +1,981 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yaman Almobayed - Full Stack Developer</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --primary: #6366f1;
-        --primary-dark: #4f46e5;
-        --secondary: #8b5cf6;
-        --dark: #0f172a;
-        --dark-light: #1e293b;
-        --text: #cbd5e1;
-        --text-dark: #94a3b8;
-        --accent: #f59e0b;
-      }
-
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(
-          135deg,
-          var(--dark) 0%,
-          var(--dark-light) 100%
-        );
-        color: var(--text);
-        line-height: 1.6;
-        overflow-x: hidden;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-      }
-
-      /* Navigation */
-      nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: rgba(15, 23, 42, 0.95);
-        backdrop-filter: blur(10px);
-        z-index: 1000;
-        padding: 1rem 0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-
-      nav .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 2rem;
-        list-style: none;
-      }
-
-      .nav-links a {
-        color: var(--text);
-        text-decoration: none;
-        transition: color 0.3s;
-        font-weight: 500;
-      }
-
-      .nav-links a:hover {
-        color: var(--primary);
-      }
-
-      /* Hero Section */
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding-top: 80px;
-      }
-
-      .hero-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: center;
-      }
-
-      .hero-text h1 {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .hero-text h2 {
-        font-size: 1.8rem;
-        color: var(--accent);
-        margin-bottom: 1rem;
-      }
-
-      .hero-text p {
-        font-size: 1.2rem;
-        color: var(--text-dark);
-        margin-bottom: 2rem;
-      }
-
-      .hero-image {
-        text-align: center;
-      }
-
-      .profile-img {
-        width: 350px;
-        height: 350px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 6px solid var(--primary);
-        box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
-        animation: float 3s ease-in-out infinite;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
-      }
-
-      .cta-buttons {
-        display: flex;
-        gap: 1rem;
-      }
-
-      .btn {
-        padding: 0.8rem 2rem;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s;
-        display: inline-block;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-      }
-
-      .btn-secondary {
-        border: 2px solid var(--primary);
-        color: var(--primary);
-      }
-
-      .btn-secondary:hover {
-        background: var(--primary);
-        color: white;
-      }
-
-      /* Section Styles */
-      section {
-        padding: 5rem 0;
-      }
-
-      .section-title {
-        text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 3rem;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      /* Skills Section */
-      .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
-      }
-
-      .skill-card {
-        background: rgba(30, 41, 59, 0.6);
-        padding: 1.5rem;
-        border-radius: 12px;
-        text-align: center;
-        transition: all 0.3s;
-        border: 1px solid rgba(99, 102, 241, 0.2);
-      }
-
-      .skill-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--primary);
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-      }
-
-      .skill-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
-
-      /* Projects Section */
-      .projects-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 2rem;
-      }
-
-      .project-card {
-        background: rgba(30, 41, 59, 0.6);
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.3s;
-        border: 1px solid rgba(99, 102, 241, 0.2);
-      }
-
-      .project-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
-      }
-
-      .project-content {
-        padding: 1.5rem;
-      }
-
-      .project-card h3 {
-        color: var(--primary);
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-      }
-
-      .project-card p {
-        color: var(--text-dark);
-        margin-bottom: 1rem;
-      }
-
-      .project-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-      }
-
-      .tag {
-        background: rgba(99, 102, 241, 0.2);
-        color: var(--primary);
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-      }
-
-      .project-links {
-        display: flex;
-        gap: 1rem;
-      }
-
-      .project-link {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-        transition: color 0.3s;
-      }
-
-      .project-link:hover {
-        color: var(--secondary);
-      }
-
-      /* Certificates Section */
-      .certificates-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-      }
-
-      .certificate-card {
-        background: rgba(30, 41, 59, 0.6);
-        border-radius: 12px;
-        padding: 1.5rem;
-        transition: all 0.3s;
-        border: 1px solid rgba(99, 102, 241, 0.2);
-      }
-
-      .certificate-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-      }
-
-      .certificate-card h3 {
-        color: var(--primary);
-        margin-bottom: 0.5rem;
-      }
-
-      .certificate-meta {
-        color: var(--text-dark);
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-      }
-
-      /* Contact Section */
-      .contact-content {
-        max-width: 600px;
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      .contact-links {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        margin-top: 2rem;
-      }
-
-      .contact-link {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: var(--text);
-        text-decoration: none;
-        font-size: 1.1rem;
-        transition: all 0.3s;
-      }
-
-      .contact-link:hover {
-        color: var(--primary);
-        transform: translateY(-3px);
-      }
-
-      /* Footer */
-      footer {
-        background: rgba(15, 23, 42, 0.95);
-        text-align: center;
-        padding: 2rem 0;
-        margin-top: 5rem;
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        .hero-content {
-          grid-template-columns: 1fr;
-          text-align: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .hero-text h1 {
-          font-size: 2.5rem;
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --text: #cbd5e1;
+            --text-dark: #94a3b8;
+            --accent: #f59e0b;
         }
 
-        .profile-img {
-          width: 250px;
-          height: 250px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
-          display: none;
+            display: flex;
+            gap: 2rem;
+            list-style: none;
         }
 
-        .projects-grid,
-        .certificates-grid {
-          grid-template-columns: 1fr;
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
         }
-      }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            /* Reduced padding-bottom for compactness */
+            padding-bottom: 2rem; 
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text h2 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+        }
+
+        .hero-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .info-item span:first-child {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .hero-image {
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--primary);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Section Styles */
+        section {
+            /* Reduced padding for sections */
+            padding: 3.5rem 0; 
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem; /* Reduced margin */
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem; /* Reduced margin */
+            line-height: 1.8;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-top: 1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-card p {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .soft-skills {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .soft-skills h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .soft-skill-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .soft-skill-item h4 {
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .achievement-list {
+            margin: 1rem 0;
+            padding-left: 1.2rem;
+        }
+
+        .achievement-list li {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .achievement-list li::marker {
+            color: var(--accent);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .project-link:hover {
+            color: var(--secondary);
+        }
+
+        /* Experience Section */
+        .experience-timeline {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .experience-item {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem; /* Reduced margin */
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s;
+        }
+
+        .experience-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .experience-header {
+            margin-bottom: 1rem;
+        }
+
+        .experience-header h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-meta {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .experience-achievements {
+            margin-top: 1rem;
+        }
+
+        .experience-achievements ul {
+            padding-left: 1.5rem;
+        }
+
+        .experience-achievements li {
+            color: var(--text);
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .experience-achievements li::marker {
+            color: var(--accent);
+        }
+
+        /* Certificates Section */
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .certificate-card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .certificate-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .certificate-meta {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .certificate-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .certificate-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem; /* Reduced margin */
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .profile-img {
+                width: 250px;
+                height: 250px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .projects-grid,
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-info {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <nav>
-      <div class="container">
-        <div class="logo">YA</div>
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#certificates">Certificates</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
+        <div class="container">
+            <div class="logo">YA</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certificates">Certificates</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
     </nav>
 
     <section id="home" class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-text">
-            <h1>Yaman Almobayed</h1>
-            <h2>Full Stack Developer</h2>
-            <p>
-              Specialized in Flutter, Django, and Node.js with expertise in
-              creating robust full-stack applications. Passionate about clean
-              code, web scraping, and exceptional user experiences.
-            </p>
-            <div class="cta-buttons">
-              <a href="#projects" class="btn btn-primary">View Projects</a>
-              <a href="#contact" class="btn btn-secondary">Contact Me</a>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Yaman Almobayed</h1>
+                    <h2>Full Stack Developer</h2>
+                    <p>Results-focused Application Developer specializing in Flutter, Python, and Django for scalable, AI-integrated applications.</p>
+                    
+                    <div class="hero-info">
+                        <div class="info-item">
+                            <span>📍 Location:</span>
+                            <span>Dubai, UAE</span>
+                        </div>
+                        <div class="info-item">
+                            <span>🎓 Degree:</span>
+                            <span>Bachelor of IT (AI), Arab International University</span>
+                        </div>
+                        <div class="info-item">
+                            <span>🌍 Nationality:</span>
+                            <span>Syrian</span>
+                        </div>
+                        <div class="info-item">
+                            <span>💼 Experience:</span>
+                            <span>2+ Years</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="profile.jpg" alt="Yaman Almobayed" class="profile-img" onerror="this.src='https://via.placeholder.com/350/6366f1/ffffff?text=YA'">
+                </div>
             </div>
-          </div>
-          <div class="hero-image">
-            <img
-              src="profile.jpg"
-              alt="Yaman Almobayed"
-              class="profile-img"
-              onerror="this.src='https://via.placeholder.com/350/6366f1/ffffff?text=YA'"
-            />
-          </div>
         </div>
-      </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <p>Full Stack Developer specializing in Flutter, Python, and Django for scalable, AI-integrated applications. Proven success in designing high-performance mobile and backend systems that improve efficiency and automate workflows.</p>
+                <p>Experience at Elite WhereGo, Arab Bank Syria, and freelance projects, delivering end-to-end solutions with quantifiable business impact.</p>
+            </div>
+        </div>
     </section>
 
     <section id="skills">
-      <div class="container">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-grid">
-          <div class="skill-card">
-            <div class="skill-icon">📱</div>
-            <h3>Flutter</h3>
-            <p>Cross-platform Development</p>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">🎯</div>
-            <h3>Dart</h3>
-            <p>Programming Language</p>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">🐍</div>
-            <h3>Python</h3>
-            <p>Backend Development</p>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">🌐</div>
-            <h3>Django</h3>
-            <p>Web Framework</p>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">🟢</div>
-            <h3>Node.js</h3>
-            <p>JavaScript Runtime</p>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">🔗</div>
-            <h3>REST API</h3>
-            <p>Integration & Development</p>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">🕷️</div>
-            <h3>Web Scraping</h3>
-            <p>Data Extraction</p>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">💳</div>
-            <h3>Payment Gateway</h3>
-            <p>Integration</p>
-          </div>
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            
+            <h3 style="color: var(--primary); text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">Technical Skills</h3>
+            <div class="skills-grid" style="margin-bottom: 4rem;">
+                <div class="skill-card">
+                    <div class="skill-icon">📱</div>
+                    <h3>Flutter</h3>
+                    <p>Mobile Development</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🎯</div>
+                    <h3>Dart</h3>
+                    <p>Programming</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🐍</div>
+                    <h3>Python</h3>
+                    <p>Backend Development</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3>Django</h3>
+                    <p>Web Framework</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🟢</div>
+                    <h3>Node.js</h3>
+                    <p>JavaScript Runtime</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h3>Express.js</h3>
+                    <p>Backend Framework</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🗄️</div>
+                    <h3>PostgreSQL</h3>
+                    <p>Database</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🍃</div>
+                    <h3>MongoDB</h3>
+                    <p>NoSQL Database</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🐬</div>
+                    <h3>MySQL</h3>
+                    <p>Database</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔴</div>
+                    <h3>Redis</h3>
+                    <p>Caching</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔗</div>
+                    <h3>REST API</h3>
+                    <p>API Development</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🕷️</div>
+                    <h3>Web Scraping</h3>
+                    <p>Data Extraction</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🐳</div>
+                    <h3>Docker</h3>
+                    <p>Containerization</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🐧</div>
+                    <h3>Linux</h3>
+                    <p>System Admin</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🎨</div>
+                    <h3>HTML/CSS</h3>
+                    <p>Frontend</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h3>JavaScript</h3>
+                    <p>Programming</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🌟</div>
+                    <h3>Git</h3>
+                    <p>Version Control</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h3>AI Models</h3>
+                    <p>Stable Diffusion</p>
+                </div>
+            </div>
+
+            <h3 style="color: var(--primary); text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">Soft Skills</h3>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">⏰</div>
+                    <h3>Time Management</h3>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🤝</div>
+                    <h3>Teamwork</h3>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🧩</div>
+                    <h3>Problem Solving</h3>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💡</div>
+                    <h3>Creativity</h3>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Application Developer</h3>
+                        <p class="experience-meta">Elite WhereGo | Dubai, UAE</p>
+                        <p class="experience-meta">Jan 2025 - Present</p>
+                    </div>
+                    <div class="experience-achievements">
+                        <ul>
+                            <li>Led end-to-end development of two cross-platform logistics apps (Order Monitoring & B2B Ordering) in Flutter, supporting real-time order tracking and <strong>reducing manual coordination by 50%</strong></li>
+                            <li>Built scalable backend architecture using Django, PostgreSQL, Docker, and Celery—<strong>handling 10,000+ daily transactions with <200ms API latency</strong></li>
+                            <li>Deployed generative AI models (Stable Diffusion, PowerPaint) to automate product image generation, <strong>reducing design turnaround by 30%</strong></li>
+                            <li>Created Python-based web scrapers (Playwright, Scrapy) to extract and process high-volume menu data from partner platforms, <strong>improving catalog accuracy by 70%</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>IT Systems Development Officer</h3>
+                        <p class="experience-meta">Arab Bank Syria | Damascus, Syria</p>
+                        <p class="experience-meta">Jul 2024 - Nov 2024</p>
+                    </div>
+                    <div class="experience-achievements">
+                        <ul>
+                            <li>Designed and automated data analytics dashboards using SAP BI, transforming raw Oracle data into actionable insights that <strong>improved reporting speed by 45%</strong></li>
+                            <li>Optimized Oracle database performance for critical systems managing millions of daily transactions, <strong>improving uptime and query response time by 20%</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Flutter Developer (Freelance Contract)</h3>
+                        <p class="experience-meta">Ployify | Vienna, Austria</p>
+                        <p class="experience-meta">Feb 2024 - Mar 2024</p>
+                    </div>
+                    <div class="experience-achievements">
+                        <ul>
+                            <li>Delivered production-ready Flutter modules for a healthcare management system <strong>used by 1,000+ professionals</strong>, improving data entry efficiency and UX consistency</li>
+                            <li>Collaborated in agile sprints, implementing clean architecture and state management for maintainable, scalable code</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Flutter Developer Intern</h3>
+                        <p class="experience-meta">IXCoders | Damascus, Syria</p>
+                        <p class="experience-meta">Mar 2023 - Oct 2023</p>
+                    </div>
+                    <div class="experience-achievements">
+                        <ul>
+                            <li>Completed a structured Flutter development program focused on building production-grade mobile apps with clean architecture and responsive design</li>
+                            <li>Developed and deployed multiple demo applications showcasing state management, API integration, and adaptive UI/UX principles</li>
+                            <li>Collaborated using Git and GitLab for version control, code reviews, and CI/CD pipelines, ensuring consistent coding standards</li>
+                            <li>Gained hands-on experience in agile sprint cycles, improving delivery speed and team collaboration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="projects">
-      <div class="container">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-grid">
-          <div class="project-card">
-            <div class="project-content">
-              <h3>🕷️ Dashboard - Web Scraping System</h3>
-              <p>
-                Full-stack web scraping dashboard with backend, frontend, and
-                multiple scrapers. Comprehensive system for data extraction,
-                processing, and visualization with a modern user interface.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Python</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">Web Scraping</span>
-                <span class="tag">Full Stack</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://github.com/YamanAlmobayed/dashboard"
-                  class="project-link"
-                  target="_blank"
-                  >View Code →</a
-                >
-              </div>
-            </div>
-          </div>
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>🕷️ Dashboard - Web Scraping System</h3>
+                        <p>Full-stack web scraping dashboard with backend, frontend, and multiple scrapers for data extraction, processing, and visualization.</p>
+                        <ul class="achievement-list">
+                            <li>Built comprehensive scraping infrastructure with Python (Playwright, Scrapy)</li>
+                            <li>Developed frontend dashboard for data visualization and management</li>
+                            <li>Implemented automated data processing pipelines</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Web Scraping</span>
+                            <span class="tag">Full Stack</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/YamanAlmobayed/dashboard" class="project-link" target="_blank">View Code →</a>
+                        </div>
+                    </div>
+                </div>
 
-          <div class="project-card">
-            <div class="project-content">
-              <h3>🛒 Salla - E-Commerce App</h3>
-              <p>
-                An innovative e-commerce showcase app with seamless product
-                exploration and delightful shopping experience. Features user
-                authentication, profile management, and favorites functionality.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">Dart</span>
-                <span class="tag">E-Commerce</span>
-                <span class="tag">REST API</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://github.com/YamanAlmobayed/salla"
-                  class="project-link"
-                  target="_blank"
-                  >View Code →</a
-                >
-              </div>
-            </div>
-          </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>🏥 SADA - Healthcare System</h3>
+                        <p>Machine learning-driven healthcare system to expedite patient testing and enhance pre-diagnostic accuracy.</p>
+                        <ul class="achievement-list">
+                            <li>Designed ML-driven system for children with Cerebral Palsy</li>
+                            <li>Collaborated with subject matter experts to refine model requirements</li>
+                            <li>Implemented multiple testing capabilities (Portage, Wechsler, LDDRS)</li>
+                            <li>Partnered with front-end developers for seamless integration</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">Django</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Healthcare</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/YamanAlmobayed/sada" class="project-link" target="_blank">View Code →</a>
+                        </div>
+                    </div>
+                </div>
 
-          <div class="project-card">
-            <div class="project-content">
-              <h3>💻 TechCart - Tech Store</h3>
-              <p>
-                A cutting-edge e-commerce app for tech enthusiasts. Features
-                smart search, personalized recommendations, and an expert system
-                (Setup Finder) that recommends products based on user
-                preferences.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">Dart</span>
-                <span class="tag">Expert System</span>
-                <span class="tag">Recommendations</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://github.com/YamanAlmobayed/techcart"
-                  class="project-link"
-                  target="_blank"
-                  >View Code →</a
-                >
-              </div>
-            </div>
-          </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>💻 TechCart - E-Commerce Platform</h3>
+                        <p>Intuitive e-commerce platform with authentication, user profiles, and intelligent recommendation system.</p>
+                        <ul class="achievement-list">
+                            <li>Collaborated with UX/UI designers for visually appealing Flutter interface</li>
+                            <li>Integrated recommendation and expert system leveraging user behavior data</li>
+                            <li>Deployed expert system backend for automated product matching</li>
+                            <li>Reduced manual curation efforts through automation</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">Dart</span>
+                            <span class="tag">Expert System</span>
+                            <span class="tag">E-Commerce</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/YamanAlmobayed/techcart" class="project-link" target="_blank">View Code →</a>
+                        </div>
+                    </div>
+                </div>
 
-          <div class="project-card">
-            <div class="project-content">
-              <h3>📰 News Wave</h3>
-              <p>
-                A minimalist news app with elegant design and intuitive
-                navigation. Features category customization, city selection for
-                local news, and clean interface for effortless headline
-                browsing.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">Dart</span>
-                <span class="tag">News API</span>
-                <span class="tag">Mobile</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://github.com/YamanAlmobayed/news_wave"
-                  class="project-link"
-                  target="_blank"
-                  >View Code →</a
-                >
-              </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>🛒 Salla - E-Commerce App</h3>
+                        <p>Innovative e-commerce showcase app with seamless product exploration and delightful shopping experience.</p>
+                        <ul class="achievement-list">
+                            <li>Implemented user authentication and profile management</li>
+                            <li>Built favorites functionality for personalized wishlists</li>
+                            <li>Designed responsive UI adapting to various devices</li>
+                        </ul>
+                        <div class="project-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">Dart</span>
+                            <span class="tag">Mobile</span>
+                            <span class="tag">E-Commerce</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/YamanAlmobayed/salla" class="project-link" target="_blank">View Code →</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-content">
-              <h3>🏥 SADA - Healthcare System</h3>
-              <p>
-                Comprehensive Django backend system for children with Cerebral
-                Palsy. Features three account types (Admin, Doctor, Parent) with
-                testing capabilities including Portage, Wechsler, and LDDRS
-                tests.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Django</span>
-                <span class="tag">Python</span>
-                <span class="tag">REST API</span>
-                <span class="tag">Healthcare</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://github.com/YamanAlmobayed/sada"
-                  class="project-link"
-                  target="_blank"
-                  >View Code →</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-content">
-              <h3>🚗 Elite Where Go</h3>
-              <p>
-                A production mobile application where I contributed to key
-                features including deep link implementation and payment gateway
-                integration. Available on Google Play Store.
-              </p>
-              <div class="project-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">Payment Gateway</span>
-                <span class="tag">Production</span>
-                <span class="tag">Mobile</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.elitewherego.app&hl=en"
-                  class="project-link"
-                  target="_blank"
-                  >View on Play Store →</a
-                >
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <section id="certificates">
-      <div class="container">
-        <h2 class="section-title">Certificates & Achievements</h2>
-        <div class="certificates-grid">
-          <div class="certificate-card">
-            <h3>Clean Code</h3>
-            <p class="certificate-meta">
-              Instructor: Academind by Maximilian Schwarzmüller
-            </p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
+        <div class="container">
+            <h2 class="section-title">Certificates</h2>
+            <div class="certificates-grid">
+                <div class="certificate-card">
+                    <h3>The Complete 2022 Flutter & Dart Development Course [Arabic]</h3>
+                    <p class="certificate-meta">Abdullah Mansour | Feb 14, 2022 | 42 total hours</p>
+                    <a href="https://www.udemy.com/course/complete-flutter-arabic/" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Python Django - The Practical Guide</h3>
+                    <p class="certificate-meta">Academind by Maximilian Schwarzmüller | Aug 10, 2022 | 23 total hours</p>
+                    <a href="https://www.udemy.com/course/python-django-the-practical-guide/" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>The Python and Django Learning Guide</h3>
+                    <p class="certificate-meta">Hassan Fulaih | Feb 24, 2022 | 9 total hours</p>
+                    <a href="https://www.udemy.com/course/amdbdfbs/?couponCode=KEEPLEARNING" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Learn Adobe Xd: UI UX Design from Zero To Hero</h3>
+                    <p class="certificate-meta">Oussama Bendahou | Sept 4, 2022 | 3 total hours</p>
+                </div>
+                <div class="certificate-card">
+                    <h3>The Web Front End Learning Guide</h3>
+                    <p class="certificate-meta">Hassan Fulaih | Feb 28, 2022 | 10 total hours</p>
+                    <a href="https://www.udemy.com/course/wcsjwvoc/?couponCode=KEEPLEARNING" class="certificate-link" target="_blank">View Course →</a>
+                </div>
 
-          <div class="certificate-card">
-            <h3>The Complete Python Bootcamp From Zero to Hero in Python</h3>
-            <p class="certificate-meta">Instructor: Jose Portilla</p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
-
-          <div class="certificate-card">
-            <h3>Build REST APIs with Django REST Framework and Python</h3>
-            <p class="certificate-meta">Instructor: Shubham Sarda</p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
-
-          <div class="certificate-card">
-            <h3>The Git & Github Bootcamp</h3>
-            <p class="certificate-meta">Instructor: Colt Steele</p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
-
-          <div class="certificate-card">
-            <h3>The Complete JavaScript Course: From Zero to Expert</h3>
-            <p class="certificate-meta">Instructor: Jonas Schmedtmann</p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
-
-          <div class="certificate-card">
-            <h3>Node.js, Express, MongoDB & More: The Complete Bootcamp</h3>
-            <p class="certificate-meta">Instructor: Jonas Schmedtmann</p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
-
-          <div class="certificate-card">
-            <h3>The Python and Django Learning Guide</h3>
-            <p class="certificate-meta">Instructor: Hassan Fulaih</p>
-            <p class="certificate-meta">
-              Completed: Feb. 24, 2022 | Duration: 9 hours
-            </p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
-
-          <div class="certificate-card">
-            <h3>The Web Front End Learning Guide</h3>
-            <p class="certificate-meta">Instructor: Hassan Fulaih</p>
-            <p class="certificate-meta">
-              Completed: Feb. 28, 2022 | Duration: 10 hours
-            </p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
-
-          <div class="certificate-card">
-            <h3>
-              The Complete 2022 Flutter & Dart Development Course [Arabic]
-            </h3>
-            <p class="certificate-meta">Instructor: Abdullah Mansour</p>
-            <p class="certificate-meta">
-              Completed: Feb. 14, 2022 | Duration: 42 hours
-            </p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
-
-          <div class="certificate-card">
-            <h3>Python Django - The Practical Guide</h3>
-            <p class="certificate-meta">
-              Instructors: Academind by Maximilian Schwarzmüller
-            </p>
-            <p class="certificate-meta">
-              Completed: Aug. 10, 2022 | Duration: 23 hours
-            </p>
-            <p class="certificate-meta">Platform: Udemy</p>
-          </div>
+                <div class="certificate-card">
+                    <h3>Clean Code: Writing Code That Lives in Your Head</h3>
+                    <p class="certificate-meta">Academind by Maximilian Schwarzmüller | May 15, 2023 | 6h 42m</p>
+                    <a href="https://www.udemy.com/course/writing-clean-code/" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>The Complete Python Bootcamp From Zero to Hero in Python</h3>
+                    <p class="certificate-meta">Jose Portilla | Nov 20, 2022 | 22h 23m</p>
+                    <a href="https://www.udemy.com/course/complete-python-bootcamp/" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Django Rest Framework (DRF) + React</h3>
+                    <p class="certificate-meta">Udemy Course | Sept 10, 2023</p>
+                    <a href="https://www.udemy.com/course/django-rest-framework/" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>The Git & Github Bootcamp</h3>
+                    <p class="certificate-meta">Colt Steele | Feb 2, 2022 | 17h 3m</p>
+                    <a href="https://www.udemy.com/course/git-and-github-bootcamp/" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>The Complete JavaScript Course 2025: From Zero to Expert!</h3>
+                    <p class="certificate-meta">Jonas Schmedtmann | Jun 25, 2024 | 71h 11m</p>
+                    <a href="https://www.udemy.com/course/the-complete-javascript-course/" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Node.js, Express, MongoDB & More: The Complete Bootcamp</h3>
+                    <p class="certificate-meta">Jonas Schmedtmann | Aug 1, 2024 | 42h 12m</p>
+                    <a href="https://www.udemy.com/course/nodejs-express-mongodb-bootcamp/" class="certificate-link" target="_blank">View Course →</a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <section id="contact">
-      <div class="container">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="contact-content">
-          <p>
-            I'm always open to discussing new projects, creative ideas, or
-            opportunities to be part of your vision.
-          </p>
-          <div class="contact-links">
-            <a href="mailto:yaman.almobayed@hotmail.com" class="contact-link">
-              📧 Email
-            </a>
-            <a
-              href="https://github.com/YamanAlmobayed"
-              class="contact-link"
-              target="_blank"
-            >
-              💻 GitHub
-            </a>
-            <a href="tel:+971509897237" class="contact-link"> 📱 Phone </a>
-          </div>
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-content">
+                <p>I'm currently open to new opportunities. Feel free to connect or drop an email.</p>
+                <div class="contact-links">
+                    <a href="mailto:yaman.almobayed@hotmail.com" class="contact-link">
+                        📧 yaman.almobayed@hotmail.com
+                    </a>
+                    <a href="tel:+971509897237" class="contact-link">
+                        📞 +971 50 989 7237
+                    </a>
+                    <a href="https://www.linkedin.com/in/yaman-almobayed" class="contact-link" target="_blank">
+                        🔗 LinkedIn
+                    </a>
+                    <a href="https://github.com/YamanAlmobayed" class="contact-link" target="_blank">
+                        ⭐ GitHub
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <footer>
-      <div class="container">
-        <p>&copy; 2025 Yaman Almobayed. All rights reserved.</p>
-      </div>
+        <div class="container">
+            <p>&copy; 2025 Yaman Almobayed. All rights reserved.</p>
+        </div>
     </footer>
-
-    <script>
-      // Smooth scrolling
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        });
-      });
-
-      // Add scroll animation
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -100px 0px",
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }
-        });
-      }, observerOptions);
-
-      document
-        .querySelectorAll(".skill-card, .project-card, .certificate-card")
-        .forEach((el) => {
-          el.style.opacity = "0";
-          el.style.transform = "translateY(20px)";
-          el.style.transition = "all 0.6s ease";
-          observer.observe(el);
-        });
-    </script>
-  </body>
+</body>
 </html>
